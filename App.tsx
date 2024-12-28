@@ -19,6 +19,9 @@ function App(): React.JSX.Element {
           />
 
           <Button loading title="Testando" />
+
+          <Button preset="outline" title="Testando" />
+          <Button preset="outline" loading title="Testando" />
         </View>
       </SafeAreaView>
     </ThemeProvider>
