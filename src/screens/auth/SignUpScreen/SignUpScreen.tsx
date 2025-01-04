@@ -7,7 +7,7 @@ import {Button} from '../../../components/Button/Button';
 
 export function SignUpScreen() {
   return (
-    <Screen canGoBack>
+    <Screen canGoBack scrollable>
       <Text preset="headingLarge" marginBottom="s32">
         Criar uma conta
       </Text>
@@ -20,6 +20,16 @@ export function SignUpScreen() {
         placeholder="Digite seu nome completo"
         label="Nome completo"
         boxProps={{marginBottom: 's16'}}
+      />
+      <TextInput
+        placeholder="Digite o seu e-mail"
+        label="E-mail"
+        boxProps={{mb: 's16'}}
+      />
+      <TextInput
+        label="Senha"
+        placeholder="Digite sua senha"
+        RightComponent={<Icon color="gray2" name="eyeOn" />}
       />
       <TextInput
         placeholder="Digite o seu e-mail"
