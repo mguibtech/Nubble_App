@@ -2,8 +2,8 @@ import React from 'react';
 import {Screen} from '../../../components/Screen/Screen';
 import {Text} from '../../../components/Text/Text';
 import {TextInput} from '../../../components/TextInput/TextInput';
-import {Icon} from '../../../components/Icon/Icon';
 import {Button} from '../../../components/Button/Button';
+import {PasswordInput} from '../../../components/PasswordInput/PasswordInput';
 
 export function SignUpScreen() {
   return (
@@ -26,21 +26,14 @@ export function SignUpScreen() {
         label="E-mail"
         boxProps={{mb: 's16'}}
       />
-      <TextInput
-        label="Senha"
-        placeholder="Digite sua senha"
-        RightComponent={<Icon color="gray2" name="eyeOn" />}
-      />
+      <PasswordInput label="Senha" placeholder="Digite sua senha" />
       <TextInput
         placeholder="Digite o seu e-mail"
         label="E-mail"
         boxProps={{mb: 's16'}}
       />
-      <TextInput
-        label="Senha"
-        placeholder="Digite sua senha"
-        RightComponent={<Icon color="gray2" name="eyeOn" />}
-      />
+
+      <PasswordInput label="Senha" placeholder="Digite sua senha" />
 
       <Button title="Cirar minha conta" mt="s48" />
     </Screen>

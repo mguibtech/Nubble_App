@@ -9,7 +9,7 @@ import {Box, BoxProps} from '../Box/Box';
 import {$fontFamily, $fontSizes, Text} from '../Text/Text';
 import {useAppTheme} from '../../hooks/useAppTheme';
 
-interface TextInputProps extends RNTextInputProps {
+export interface TextInputProps extends RNTextInputProps {
   label: string;
   errorMessage?: string;
   RightComponent?: React.ReactElement;
@@ -71,6 +71,7 @@ const $textInputStyle: TextStyle = {
   flexGrow: 1,
   flexShrink: 1,
   padding: 0,
+  color: '#000000',
   fontFamily: $fontFamily.regular,
   ...$fontSizes.paragraphMedium,
 };
