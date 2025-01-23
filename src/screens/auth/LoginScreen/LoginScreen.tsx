@@ -1,6 +1,5 @@
 import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../../routes/Routes';
 import {Alert} from 'react-native';
 import {useForm} from 'react-hook-form';
 import {loginSchema, LoginSchema} from './loginSchema';
@@ -12,6 +11,7 @@ import {
   Screen,
   Text,
 } from '@components';
+import {RootStackParamList} from '@routes';
 
 type ScreenProps = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 

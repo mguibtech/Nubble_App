@@ -1,14 +1,11 @@
 import React from 'react';
 
-import {Screen} from '../../../components/Screen/Screen';
-import {Text} from '../../../components/Text/Text';
-import {Button} from '../../../components/Button/Button';
-import {RootStackParamList} from '../../../routes/Routes';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {useResetNavigationSuccess} from '../../../hooks/useResetNavigationSuccess';
-import {FormTextInput} from '../../../components/Form/FormTextIinput';
 import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {Button, FormTextInput, Screen, Text} from '@components';
+import {useResetNavigationSuccess} from '@hooks';
+import {RootStackParamList} from '@routes';
 import {
   ForgotPasswordSchema,
   forgotPasswordSchema,
@@ -54,7 +51,7 @@ export function ForgotPasswordScreen({}: ScreenProps) {
         name="email"
         label="E-mail"
         placeholder="Digite o seu e-mail"
-        boxProps={{marginBottom: 's16'}}
+        boxProps={{marginTop: 's16'}}
       />
 
       <Button

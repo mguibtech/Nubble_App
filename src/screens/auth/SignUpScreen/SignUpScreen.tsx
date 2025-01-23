@@ -1,16 +1,18 @@
 import React from 'react';
-import {Screen} from '../../../components/Screen/Screen';
-import {Text} from '../../../components/Text/Text';
-import {Button} from '../../../components/Button/Button';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../../routes/Routes';
-import {useResetNavigationSuccess} from '../../../hooks/useResetNavigationSuccess';
 import {useForm} from 'react-hook-form';
 import {Alert} from 'react-native';
-import {FormTextInput} from '../../../components/Form/FormTextIinput';
-import {FormPasswordInput} from '../../../components/Form/FormPasswordInput';
 import {SignUpSchema, signUpSchema} from './signUpSchema';
 import {zodResolver} from '@hookform/resolvers/zod';
+import {
+  Button,
+  Screen,
+  Text,
+  FormPasswordInput,
+  FormTextInput,
+} from '@components';
+import {RootStackParamList} from '@routes';
+import {useResetNavigationSuccess} from '@hooks';
 
 type ScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUpScreen'>;
 
@@ -33,15 +35,15 @@ export function SignUpScreen({}: ScreenProps) {
       'Cadastro',
       `Email: ${email} - Nome: ${fullName} - Senha: ${password} - Username: ${username}`,
     );
-    // reset({
-    //   title: 'Sua conta foi criada com sucesso!',
-    //   description:
-    //     'Agora você já pode fazer login e aproveitar todos os recursos do app',
-    //   icon: {
-    //     name: 'checkRound',
-    //     color: 'success',
-    //   },
-    // });
+    reset({
+      title: 'Sua conta foi criada com sucesso!',
+      description:
+        'Agora você já pode fazer login e aproveitar todos os recursos do app',
+      icon: {
+        name: 'checkRound',
+        color: 'success',
+      },
+    });
   }
   return (
     <Screen canGoBack scrollable>
