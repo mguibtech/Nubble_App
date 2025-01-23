@@ -1,7 +1,6 @@
 import React from 'react';
 import {Screen} from '../../../components/Screen/Screen';
 import {Text} from '../../../components/Text/Text';
-import {TextInput} from '../../../components/TextInput/TextInput';
 import {Button} from '../../../components/Button/Button';
 import {PasswordInput} from '../../../components/PasswordInput/PasswordInput';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -9,6 +8,7 @@ import {RootStackParamList} from '../../../routes/Routes';
 import {useResetNavigationSuccess} from '../../../hooks/useResetNavigationSuccess';
 import {Controller, useForm} from 'react-hook-form';
 import {Alert} from 'react-native';
+import {FormTextInput} from '../../../components/Form/FormTextIinput';
 
 type SignUpFormType = {
   username: string;
@@ -53,43 +53,30 @@ export function SignUpScreen({}: ScreenProps) {
         Criar uma conta
       </Text>
 
-      <Controller
+      <FormTextInput
         control={control}
         name="username"
         rules={{
           required: 'Username é obrigatório',
         }}
-        render={({field, fieldState}) => (
-          <TextInput
-            errorMessage={fieldState.error?.message}
-            value={field.value}
-            onChangeText={field.onChange}
-            placeholder="@"
-            label="Seu username"
-            boxProps={{marginBottom: 's16'}}
-          />
-        )}
+        placeholder="@"
+        label="Seu username"
+        boxProps={{marginBottom: 's16'}}
       />
 
-      <Controller
+      <FormTextInput
         control={control}
         name="fullName"
         rules={{
           required: 'Nome completo é obrigatório',
         }}
-        render={({field, fieldState}) => (
-          <TextInput
-            errorMessage={fieldState.error?.message}
-            value={field.value}
-            onChangeText={field.onChange}
-            placeholder="Nome completo"
-            label="Seu nome é completo"
-            boxProps={{marginBottom: 's16'}}
-          />
-        )}
+        placeholder="Nome completo"
+        label="Seu nome é completo"
+        boxProps={{marginBottom: 's16'}}
+        autoCapitalize="words"
       />
 
-      <Controller
+      <FormTextInput
         control={control}
         name="email"
         rules={{
@@ -99,17 +86,10 @@ export function SignUpScreen({}: ScreenProps) {
             message: 'E-mail inválido',
           },
         }}
-        render={({field, fieldState}) => (
-          <TextInput
-            errorMessage={fieldState.error?.message}
-            boxProps={{mb: 's20'}}
-            value={field.value}
-            onChangeText={field.onChange}
-            label="E-mail"
-            placeholder="Digite o seu e-mail"
-          />
-        )}
+        label="E-mail"
+        placeholder="Digite o seu e-mail"
       />
+
       <Controller
         control={control}
         name="password"
