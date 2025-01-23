@@ -1,13 +1,13 @@
 import React from 'react';
 import {Text} from '../../../components/Text/Text';
-import {TextInput} from '../../../components/TextInput/TextInput';
 import {Button} from '../../../components/Button/Button';
 import {Screen} from '../../../components/Screen/Screen';
-import {PasswordInput} from '../../../components/PasswordInput/PasswordInput';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../routes/Routes';
 import {Alert} from 'react-native';
-import {useForm, Controller} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
+import {FormPasswordInput} from '../../../components/Form/FormPasswordInput';
+import {FormTextInput} from '../../../components/Form/FormTextIinput';
 
 type LoginFormType = {
   email: string;
@@ -45,7 +45,8 @@ export function LoginScreen({navigation}: ScreenProps) {
       <Text preset="paragraphLarge" mb="s40">
         Digite seu e-mail e senha para entrar
       </Text>
-      <Controller
+
+      <FormTextInput
         control={control}
         name="email"
         rules={{
@@ -55,19 +56,11 @@ export function LoginScreen({navigation}: ScreenProps) {
             message: 'E-mail inválido',
           },
         }}
-        render={({field, fieldState}) => (
-          <TextInput
-            errorMessage={fieldState.error?.message}
-            boxProps={{mb: 's20'}}
-            value={field.value}
-            onChangeText={field.onChange}
-            label="E-mail"
-            placeholder="Digite o seu e-mail"
-          />
-        )}
+        label="E-mail"
+        placeholder="Digite o seu e-mail"
       />
 
-      <Controller
+      <FormPasswordInput
         control={control}
         name="password"
         rules={{
@@ -77,15 +70,8 @@ export function LoginScreen({navigation}: ScreenProps) {
             message: 'Senha deve ter no mínimo 4 caracteres',
           },
         }}
-        render={({field, fieldState}) => (
-          <PasswordInput
-            errorMessage={fieldState.error?.message}
-            value={field.value}
-            onChangeText={field.onChange}
-            label="Senha"
-            placeholder="Digite sua senha"
-          />
-        )}
+        label="Senha"
+        placeholder="Digite sua senha"
       />
 
       <Text

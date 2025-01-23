@@ -2,13 +2,13 @@ import React from 'react';
 import {Screen} from '../../../components/Screen/Screen';
 import {Text} from '../../../components/Text/Text';
 import {Button} from '../../../components/Button/Button';
-import {PasswordInput} from '../../../components/PasswordInput/PasswordInput';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../routes/Routes';
 import {useResetNavigationSuccess} from '../../../hooks/useResetNavigationSuccess';
-import {Controller, useForm} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import {Alert} from 'react-native';
 import {FormTextInput} from '../../../components/Form/FormTextIinput';
+import {FormPasswordInput} from '../../../components/Form/FormPasswordInput';
 
 type SignUpFormType = {
   username: string;
@@ -90,7 +90,7 @@ export function SignUpScreen({}: ScreenProps) {
         placeholder="Digite o seu e-mail"
       />
 
-      <Controller
+      <FormPasswordInput
         control={control}
         name="password"
         rules={{
@@ -100,15 +100,8 @@ export function SignUpScreen({}: ScreenProps) {
             message: 'Senha deve ter no mínimo 4 caracteres',
           },
         }}
-        render={({field, fieldState}) => (
-          <PasswordInput
-            errorMessage={fieldState.error?.message}
-            value={field.value}
-            onChangeText={field.onChange}
-            label="Senha"
-            placeholder="Digite sua senha"
-          />
-        )}
+        label="Senha"
+        placeholder="Digite sua senha"
       />
 
       <Button
