@@ -5,8 +5,14 @@ import {Text} from '../../../components/Text/Text';
 import {Button} from '../../../components/Button/Button';
 import {RootStackParamList} from '../../../routes/Routes';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {TextInput} from '../../../components/TextInput/TextInput';
 import {useResetNavigationSuccess} from '../../../hooks/useResetNavigationSuccess';
+import {FormTextInput} from '../../../components/Form/FormTextIinput';
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {
+  ForgotPasswordSchema,
+  forgotPasswordSchema,
+} from './forgotPasswordSchema';
 
 type ScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -15,6 +21,13 @@ type ScreenProps = NativeStackScreenProps<
 
 export function ForgotPasswordScreen({}: ScreenProps) {
   const {reset} = useResetNavigationSuccess();
+  const {handleSubmit, control, formState} = useForm<ForgotPasswordSchema>({
+    resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: {
+      email: '',
+    },
+    mode: 'onChange',
+  });
   function submitForm() {
     reset({
       title: 'Enviamos as instruções para seu e-mail',
@@ -31,15 +44,25 @@ export function ForgotPasswordScreen({}: ScreenProps) {
       <Text preset="headingLarge" mb="s16">
         Esqueci minha senha
       </Text>
+
       <Text preset="paragraphLarge">
         Digite seu e-mail e enviaremos as instruções para redefinição de senha
       </Text>
-      <TextInput
-        boxProps={{mt: 's32'}}
+
+      <FormTextInput
+        control={control}
+        name="email"
         label="E-mail"
-        placeholder="Digite seu e-mail"
+        placeholder="Digite o seu e-mail"
+        boxProps={{marginBottom: 's16'}}
       />
-      <Button title="Recuperar senha" mt="s56" onPress={submitForm} />
+
+      <Button
+        title="Recuperar senha"
+        mt="s56"
+        onPress={handleSubmit(submitForm)}
+        disabled={!formState.isValid}
+      />
     </Screen>
   );
 }

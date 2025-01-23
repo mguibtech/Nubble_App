@@ -8,16 +8,14 @@ import {Alert} from 'react-native';
 import {useForm} from 'react-hook-form';
 import {FormPasswordInput} from '../../../components/Form/FormPasswordInput';
 import {FormTextInput} from '../../../components/Form/FormTextIinput';
-
-type LoginFormType = {
-  email: string;
-  password: string;
-};
+import {loginSchema, LoginSchema} from './loginSchema';
+import {zodResolver} from '@hookform/resolvers/zod';
 
 type ScreenProps = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
 export function LoginScreen({navigation}: ScreenProps) {
-  const {handleSubmit, control, formState} = useForm<LoginFormType>({
+  const {handleSubmit, control, formState} = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
       password: '',
@@ -33,7 +31,7 @@ export function LoginScreen({navigation}: ScreenProps) {
     navigation.navigate('ForgotPasswordScreen');
   }
 
-  function submitForm({email, password}: LoginFormType) {
+  function submitForm({email, password}: LoginSchema) {
     Alert.alert('Login', `Email: ${email} - Senha: ${password}`);
   }
 
@@ -49,27 +47,14 @@ export function LoginScreen({navigation}: ScreenProps) {
       <FormTextInput
         control={control}
         name="email"
-        rules={{
-          required: 'E-mail é obrigatório',
-          pattern: {
-            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-            message: 'E-mail inválido',
-          },
-        }}
         label="E-mail"
         placeholder="Digite o seu e-mail"
+        boxProps={{marginBottom: 's16'}}
       />
 
       <FormPasswordInput
         control={control}
         name="password"
-        rules={{
-          required: 'Senha é obrigatória',
-          minLength: {
-            value: 4,
-            message: 'Senha deve ter no mínimo 4 caracteres',
-          },
-        }}
         label="Senha"
         placeholder="Digite sua senha"
       />
@@ -84,7 +69,6 @@ export function LoginScreen({navigation}: ScreenProps) {
       </Text>
 
       <Button
-        // disabled={!!emailError || password.length <= 4}
         disabled={!formState.isValid}
         title="Entrar"
         mt="s48"
