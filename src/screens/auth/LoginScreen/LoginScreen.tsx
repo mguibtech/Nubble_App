@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Text} from '../../../components/Text/Text';
 import {TextInput} from '../../../components/TextInput/TextInput';
 import {Button} from '../../../components/Button/Button';
@@ -7,18 +7,23 @@ import {PasswordInput} from '../../../components/PasswordInput/PasswordInput';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../routes/Routes';
 import {Alert} from 'react-native';
+import {useForm, Controller} from 'react-hook-form';
+
+type LoginFormType = {
+  email: string;
+  password: string;
+};
 
 type ScreenProps = NativeStackScreenProps<RootStackParamList, 'LoginScreen'>;
 
 export function LoginScreen({navigation}: ScreenProps) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-
-  useEffect(() => {
-    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    setEmailError(isValidEmail ? '' : 'E-mail inválido');
-  }, [email]);
+  const {handleSubmit, control, formState} = useForm<LoginFormType>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    mode: 'onChange',
+  });
 
   function navigateToSignUpScreen() {
     navigation.navigate('SignUpScreen');
@@ -28,7 +33,7 @@ export function LoginScreen({navigation}: ScreenProps) {
     navigation.navigate('ForgotPasswordScreen');
   }
 
-  function submitForm() {
+  function submitForm({email, password}: LoginFormType) {
     Alert.alert('Login', `Email: ${email} - Senha: ${password}`);
   }
 
@@ -40,21 +45,47 @@ export function LoginScreen({navigation}: ScreenProps) {
       <Text preset="paragraphLarge" mb="s40">
         Digite seu e-mail e senha para entrar
       </Text>
-
-      <TextInput
-        errorMessage={emailError}
-        boxProps={{mb: 's20'}}
-        value={email}
-        onChangeText={setEmail}
-        label="E-mail"
-        placeholder="Digite o seu e-mail"
+      <Controller
+        control={control}
+        name="email"
+        rules={{
+          required: 'E-mail é obrigatório',
+          pattern: {
+            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            message: 'E-mail inválido',
+          },
+        }}
+        render={({field, fieldState}) => (
+          <TextInput
+            errorMessage={fieldState.error?.message}
+            boxProps={{mb: 's20'}}
+            value={field.value}
+            onChangeText={field.onChange}
+            label="E-mail"
+            placeholder="Digite o seu e-mail"
+          />
+        )}
       />
 
-      <PasswordInput
-        value={password}
-        onChangeText={setPassword}
-        label="Senha"
-        placeholder="Digite sua senha"
+      <Controller
+        control={control}
+        name="password"
+        rules={{
+          required: 'Senha é obrigatória',
+          minLength: {
+            value: 4,
+            message: 'Senha deve ter no mínimo 4 caracteres',
+          },
+        }}
+        render={({field, fieldState}) => (
+          <PasswordInput
+            errorMessage={fieldState.error?.message}
+            value={field.value}
+            onChangeText={field.onChange}
+            label="Senha"
+            placeholder="Digite sua senha"
+          />
+        )}
       />
 
       <Text
@@ -67,10 +98,11 @@ export function LoginScreen({navigation}: ScreenProps) {
       </Text>
 
       <Button
-        disabled={!!emailError || password.length <= 4}
+        // disabled={!!emailError || password.length <= 4}
+        disabled={!formState.isValid}
         title="Entrar"
         mt="s48"
-        onPress={submitForm}
+        onPress={handleSubmit(submitForm)}
       />
       <Button
         onPress={navigateToSignUpScreen}
